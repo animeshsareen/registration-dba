@@ -1,4 +1,4 @@
-# registration-database
+# UT Student Registration - DBA Roleplay
 
 *Course: MIS 325 - Database Management*
 
