@@ -12,7 +12,7 @@ Then, we created and maintained an Oracle RDBMS for UT student registration.
  **Key Takeaways**
 
 - Database Design
-    - Check out mine: *schema.pdf* file in this repo
+    - Check out mine: *schema.png* file in this repo
 - Normalization
     - What it is
     - When to normalize
