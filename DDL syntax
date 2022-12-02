@@ -1,0 +1,659 @@
+-- Section 1: DROPS
+
+--DROP ALL SEQUENCEs
+
+DROP SEQUENCE Course_ID_seq;
+DROP SEQUENCE Room_ID_seq;
+DROP SEQUENCE Section_ID_seq;
+DROP SEQUENCE Address_ID_seq;
+
+--DROP TABLES
+
+DROP TABLE Enrollment;
+DROP TABLE Section;
+DROP TABLE Room;
+DROP TABLE Course;
+DROP TABLE Teacher;
+DROP TABLE Major_Student_Linking;
+DROP TABLE Major;
+DROP TABLE Student_Address_Linking;
+DROP TABLE Address;
+DROP TABLE Student;
+
+
+
+-- Section 2: CREATE SEQUENCES
+
+--creating Address_ID SEQUENCE
+CREATE SEQUENCE Address_ID_seq START WITH 1 INCREMENT BY 1;
+    
+--creating Course_ID SEQUENCE
+CREATE SEQUENCE Course_ID_seq START WITH 1 INCREMENT BY 1;
+    
+--creating Room_ID SEQUENCE
+CREATE SEQUENCE Room_ID_seq START WITH 1 INCREMENT BY 1;
+    
+--creating Section_ID SEQUENCE
+CREATE SEQUENCE Section_ID_seq START WITH 1 INCREMENT BY 1;
+
+
+
+--Section 2 part 2: CREATE TABLES
+
+--creating Student table
+CREATE TABLE Student (
+
+    UTEID                VARCHAR(10) PRIMARY KEY,
+    First_Name           VARCHAR(50) NOT NULL,
+    Middle_Name          VARCHAR(50),
+    Last_Name            VARCHAR(50) NOT NULL,
+    Date_of_Birth        DATE NOT NULL,
+    Stu_Classification   CHAR(1) NOT NULL,
+    Email                VARCHAR(100) NOT NULL UNIQUE,
+    Phone                CHAR(12) NOT NULL,
+    Primary_College_Code CHAR(1) NOT NULL,
+    International_Flag   CHAR(1) NOT NULL,
+    cGPA                 NUMBER(5, 4) NULL,
+
+    -- table-level constraints --
+    
+    CONSTRAINT classification_ck CHECK (Stu_Classification IN (1, 2, 3, 4, 'G','P', 'C')),
+    CONSTRAINT international_ck CHECK (International_Flag IN ('Y', 'N')),
+    CONSTRAINT email_length_check CHECK (length(Email) > 6)
+    
+);
+
+--creating Address table
+CREATE TABLE Address (
+
+    Address_ID      NUMBER(5) DEFAULT Address_ID_seq.NEXTVAL PRIMARY KEY,
+    Address_Line_1  VARCHAR(100) NOT NULL,
+    Address_Line_2  VARCHAR(100) NULL,
+    City            VARCHAR(30) NOT NULL,
+    State_Region    CHAR(2) NOT NULL,
+    Zip_Postal_Code NUMBER(5) NOT NULL,
+    Country         VARCHAR(100) NOT NULL
+    
+);
+
+--creating Student Address linkage table to account for their M-M relationship
+
+CREATE TABLE Student_Address_Linking (
+
+    UTEID             VARCHAR(20),
+    Address_ID        NUMBER(15),
+    Address_Type_Code CHAR(1),
+	
+    -- table-level constraints --
+    
+    CONSTRAINT Stu_Address_link_pkkk PRIMARY KEY (UTEID,
+                                                  Address_ID,
+                                                  Address_Type_Code),
+    CONSTRAINT StudentID_Address_fk FOREIGN KEY (UTEID)
+        REFERENCES Student (UTEID)
+            ON DELETE CASCADE,
+    CONSTRAINT Student_AddressID_fk FOREIGN KEY (Address_ID)
+        REFERENCES Address (Address_ID)
+            ON DELETE CASCADE,
+    CONSTRAINT Address_Type_Code__ck CHECK (Address_Type_Code IN ('H', 'L', 'O'))
+    
+);
+        
+
+--creating majors table
+CREATE TABLE Major (
+
+    Major_ID          NUMBER(5) PRIMARY KEY,
+    Major_Code        CHAR(3) NOT NULL UNIQUE,
+    Major_Description VARCHAR(4000) NOT NULL
+    
+); 
+
+--creating Student major linakge table due to their M-M relationship
+CREATE TABLE major_Student_Linking (
+
+    UTEID         VARCHAR(20),
+    Major_ID      NUMBER(5),
+    Date_Declared DATE DEFAULT sysdate NOT NULL,
+    
+    -- table-level constraints --
+
+    CONSTRAINT major_student_pkk PRIMARY KEY (UTEID,
+                                              Major_ID),
+    CONSTRAINT major_studentID_fk FOREIGN KEY (UTEID)
+        REFERENCES Student (UTEID)
+            ON DELETE CASCADE,
+    CONSTRAINT majorID_student_fk FOREIGN KEY (Major_ID)
+        REFERENCES major (Major_ID)
+            ON DELETE CASCADE
+            
+);
+
+--creating teachers table
+CREATE TABLE Teacher (
+
+    UTEID            VARCHAR(10)PRIMARY KEY,
+    First_Name       VARCHAR(50) NOT NULL,
+    Last_Name        VARCHAR(50) NOT NULL,
+    Email            VARCHAR(100) NOT NULL UNIQUE,
+    Primary_Dept     VARCHAR(6) NOT NULL,
+    Primary_Title    VARCHAR(40) NOT NULL,
+    Office_Phone     CHAR(12) NOT NULL,
+    Office_Location  VARCHAR(15) NOT NULL,
+    Office_Address_1 VARCHAR(100) NOT NULL,
+    Office_Address_2 VARCHAR(100) NULL,
+    Office_City      VARCHAR(30) NOT NULL,
+    Office_State     CHAR(2) NOT NULL,
+    Office_Zip       NUMBER(5) NOT NULL,
+    Campus_Mail_Code CHAR(5) NOT NULL
+    
+);
+
+-- creating Courses table
+CREATE TABLE Course (
+
+    Course_ID          NUMBER(5) DEFAULT Course_ID_seq.NEXTVAL PRIMARY KEY,
+    Course_Code        VARCHAR(10) NOT NULL,
+    Course_Name        VARCHAR(350) NOT NULL,
+    Course_Description VARCHAR(4000) NOT NULL
+    
+);
+
+-- creating Room table
+CREATE TABLE Room (
+
+    Room_ID       NUMBER(5) DEFAULT Room_ID_seq.NEXTVAL PRIMARY KEY,
+    Building_Code CHAR(3) NOT NULL,
+    Room_Floor    NUMBER(2) NOT NULL,
+    Room_Number   VARCHAR(6) NOT NULL, -- this is varchar because of room numbers such as 3.142A or B
+    Max_Seats     NUMBER(4) NOT NULL
+    
+);
+
+-- creating Section table
+CREATE TABLE Section (
+
+    Section_ID       NUMBER(10) DEFAULT Section_ID_seq.NEXTVAL PRIMARY KEY,
+    Course_ID        NUMBER(5),
+    Instructor_UTEID VARCHAR(10) NULL,
+    Room_ID          NUMBER(5) NULL,
+    Unique_Number    NUMBER(8) NOT NULL,
+    Semester_Code    CHAR(4) NOT NULL,
+    Section_Days     VARCHAR(6) NULL,
+    Starting_Hour    NUMBER(4) NULL,
+    Length_Minutes   NUMBER(3) NULL,
+    Section_Mode     VARCHAR(20) NOT NULL,
+    Seat_Limit       NUMBER(4) NOT NULL,
+    Status           CHAR(1) DEFAULT ('O') NOT NULL,
+    
+    -- table-level constraints --
+
+    CONSTRAINT Status_ck CHECK (Status IN ('O', 'W', 'C', 'X')),    
+    CONSTRAINT Section_CourseID_fk FOREIGN KEY (Course_ID)
+        REFERENCES Course (Course_ID)
+            ON DELETE CASCADE,
+    CONSTRAINT Section_instructorID_fk FOREIGN KEY (instructor_UTEID)
+        REFERENCES Teacher (UTEID)
+            ON DELETE CASCADE,
+    CONSTRAINT Section_RoomID_fk FOREIGN KEY (Room_ID)
+        REFERENCES Room (Room_ID)
+            ON DELETE CASCADE
+            
+);
+
+--adding a composite unique constraint on unique number and semester code in the Section table 
+ALTER TABLE Section
+    ADD CONSTRAINT sem_Section_uq UNIQUE (unique_number, semester_code);
+    
+--creating Enrollment table
+CREATE TABLE Enrollment (
+    UTEID      VARCHAR(10),
+    Section_ID NUMBER(5),
+    Grade_Code VARCHAR(2) NULL,
+    
+    CONSTRAINT enrollment_pkk PRIMARY KEY (UTEID,
+                                            Section_ID),
+    CONSTRAINT enrollment_UTEID_fk FOREIGN KEY (UTEID)
+        REFERENCES Student (UTEID)
+            ON DELETE CASCADE,
+    CONSTRAINT enrollment_SectionID_fk FOREIGN KEY (Section_ID)
+        REFERENCES Section (Section_ID)
+            ON DELETE CASCADE
+);
+
+/* adding constraint to Grade_Code column
+--to limit possible inputs to actual grade values */
+
+ALTER TABLE Enrollment
+
+    ADD CONSTRAINT grade_code_ck CHECK (grade_code IN ('A', 'A-', 'B+', 'B', 'B-',
+                                                         'C+', 'C', 'C-', 'D+', 'D',
+                                                         'D-', 'F', 'P', 'W', 'Q',
+                                                         'X')
+
+);
+
+
+
+--Section 3: INSERTS
+
+
+--creating two new students: Animesh and Selena
+INSERT INTO Student VALUES (
+
+    'as96288',
+    'Animesh',
+    'Ranjan',
+    'Sareen',
+    '16-APR-2002',
+    '2',
+    'as96288@utexas.edu',
+    '123-456-7890',
+    'M',
+    'N',
+    3.8734
+    
+);
+
+INSERT INTO Student VALUES (
+
+    'sg762',
+    'Selena',
+    'Marie',
+    'Gomez',
+    '12-MAR-1999',
+    '2',
+    'sg@disney.com',
+    '123-456-7890',
+    'C',
+    'N',
+    4.0
+    
+);
+    
+--inserting both Animesh and Selena's home and local Addresses
+INSERT INTO Address VALUES (
+
+    DEFAULT,
+    '123 Smith Lane',
+    'Apt. 604',
+    'Frisco',
+    'TX',
+    75035,
+    'United States of America' 
+    
+);
+
+INSERT INTO Address VALUES (
+
+    DEFAULT,
+    '456 Leon Street',
+    'Apt. 505',
+    'Austin',
+    'TX',
+    78705,
+    'United States of America'
+    
+);
+
+
+INSERT INTO Address VALUES (
+
+    DEFAULT,
+    '123 Jane Lane',
+    'Apt. 101',
+    'Albany',
+    'NY',
+    12084,
+    'United States of America' 
+    
+);
+
+INSERT INTO Address VALUES (
+
+    DEFAULT,
+    '789 Rio Grande Street',
+    'Apt. 609',
+    'Austin',
+    'TX',
+    78705,
+    'United States of America'
+    
+);
+
+-- Linking Animesh and Selena to their respective Addresses
+INSERT INTO Student_Address_Linking VALUES (
+
+    'as96288',
+    '1',
+    'H'
+    
+);
+
+INSERT INTO Student_Address_Linking VALUES (
+
+    'sg762',
+    3,
+    'H'
+    
+);
+
+INSERT INTO Student_Address_Linking VALUES (
+
+    'as96288',
+    2,
+    'L'
+    
+);
+
+INSERT INTO Student_Address_Linking VALUES (
+
+    'sg762',
+    4,
+    'L'
+    
+);
+    
+--inserting majors into majors table
+INSERT INTO Major VALUES (
+
+    '1',
+    'MIS',
+    'Management Information Systems'
+    
+);
+
+INSERT INTO Major VALUES (
+
+    '2',
+    'BAX',
+    'Business Analytics'
+    
+);
+
+INSERT INTO Major VALUES (
+
+    '3',
+    'EE',
+    'Electrical Engineering'
+    
+);
+    
+--assigning majors to Animesh and Selena
+INSERT INTO Major_Student_Linking VALUES (
+
+    'as96288',
+    1, 
+    DEFAULT
+    
+);
+
+INSERT INTO Major_Student_Linking VALUES (
+
+    'as96288',
+    2, 
+    DEFAULT
+    
+);
+
+INSERT INTO Major_Student_Linking VALUES (
+
+    'sg762',
+    3, 
+    DEFAULT
+    
+);
+
+
+--creating rooms
+INSERT INTO Room VALUES (
+    DEFAULT,
+    'GDC',
+    '3',
+    '3.142',
+    '99'
+);
+
+INSERT INTO Room VALUES (
+    DEFAULT,
+    'CBA',
+    '4',
+    '4.414',
+    '72'
+);
+
+    
+--creating teachers
+INSERT INTO Teacher VALUES (
+
+    'ls145',
+    'Lorenzo',
+    'Sadun',
+    'sadun@utexas.edu',
+    'IROM',
+    'Lecturer',
+    '512-489-9999',
+    'CBA 2.453',
+    '123 Bevo Way',
+    'On the left', -- we're not supposed to leave null values, as per Slack
+    'Austin',
+    'TX',
+    78705,
+    'G4151'
+    
+);
+
+INSERT INTO Teacher VALUES (
+
+    'mm768',
+    'Matthew',
+    'McConaughey',
+    'mattmc@utexas.edu',
+    'EE',
+    'Lecturer',
+    '213-456-7890',
+    'GDC 4.151',
+    '471 Bevo Way',
+    'On the right', -- we're not supposed to leave null values, as per Slack
+    'Austin',
+    'TX',
+    78705,
+    'G4151'
+    
+);
+
+--creating courses
+INSERT INTO Course VALUES (
+
+    DEFAULT, 
+    
+    'STA235', 
+    
+    'Data Science For Business Applications', 
+    
+    'Restricted to Students in the McCombs School of Business. 
+    Examine data science for business applications at the intermediate level. 
+    Explore building and valIDating predictive models; advanced regression modeling; 
+    in-depth treatment of regression; models for binary outcomes; 
+    and causal inference.'
+);
+
+INSERT INTO Course VALUES (
+
+    DEFAULT,
+    
+    'MIS301', 
+    
+    'Intro To Management Information Systems',
+    
+    'Restricted to Students in the McCombs School of Business. 
+        Explores how information technology helps to achieve competitive advantage 
+        and improve decision making, business processes, operations, and organizational design. 
+        Uses a cross-functional perspective to recognize the role of technology 
+        across business activities of management, finance, marketing, human resources, and operations.'
+        
+
+);
+
+--creating sections
+    --Professor Sadun teaches two sections of Course_ID = 1
+    --Professor McConaughey teaches a section of both Course_ID = 1 and = 2
+    
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    1,
+    'ls145',
+    1,
+    30995,
+    'FA22',
+    'TTH',
+    '1200',
+    90,
+    'In Person',
+    99,
+    'O'
+    
+);
+
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    1,
+    'ls145',
+    1,
+    30996,
+    'FA22',
+    'TTH',
+    '1400',
+    90,
+    'In Person',
+    99,
+    'O'
+    
+);
+
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    1,
+    'mm768',
+    2,
+    30997,
+    'FA22',
+    'MWF',
+    '800',
+    60,
+    'In Person',
+    99,
+    'O'
+);
+
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    2,
+    'mm768',
+    2,
+    40910,
+    'FA22',
+    'MWF',
+    '1200',
+    45,
+    'In Person',
+    99,
+    'O'
+    
+);
+
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    2,
+    'mm768',
+    2,
+    40911,
+    'FA22',
+    'TTH',
+    '1600',
+    45,
+    'In Person',
+    99,
+    'O'
+    
+);
+
+INSERT INTO Section VALUES (
+
+    DEFAULT,
+    2,
+    'mm768',
+    2,
+    40912,
+    'FA22',
+    'TTH',
+    '1800',
+    45,
+    'In Person',
+    99,
+    'O'
+    
+);
+
+--enrolling Animesh into section_id = 1 and section_id = 4
+INSERT INTO Enrollment VALUES (
+
+    'as96288', 
+    1, 
+    null -- this grade hasn't occurred yet, thus must be null
+    
+);
+
+INSERT INTO Enrollment VALUES (
+
+    'as96288', 
+    4, 
+    null -- this grade hasn't occurred yet, thus must be null
+    
+);
+
+--enrolling Selena into section_id = 2 and section_id = 5
+INSERT INTO Enrollment VALUES (
+
+    'sg762', 
+    2, 
+    null -- this grade hasn't occurred yet, thus must be null
+    
+);
+
+INSERT INTO Enrollment VALUES (
+
+    'sg762', 
+    5, 
+    null -- this grade hasn't occurred yet, thus must be null
+    
+);
+
+
+
+--Section 4: CREATE INDEXES
+
+--creating indexes on all FKs that are not part of a composite PK
+CREATE INDEX section_course_ix
+    ON Section (Course_ID);
+CREATE INDEX section_instructor_ix
+    ON Section (Instructor_UTEID);
+CREATE INDEX section_roomID_IX
+    ON Section (Room_ID);
+    
+--creating two additional indexes: one on Student last names and the other on teacher last names.
+
+CREATE INDEX student_last_name_ix
+    ON Student (Last_Name);
+CREATE INDEX teacher_last_name_ix
+    ON Teacher (Last_Name);
+
+    
+    
+    
+
