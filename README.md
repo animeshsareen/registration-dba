@@ -1,34 +1,36 @@
-# UT Student Registration - DBA Roleplay
+# University Registration DBA - UT Austin IT Desk
 
 *Course: MIS 325 - Database Management*
 
 *This was a long-form class project completed over the course of 9 weeks.*
 
 First, we conducted an extensive amount of discovery 
-research with school administrators to understand what the database requirements would be.
+research with school administrators to understand what the database requirements would be. 
+Those can be found in the context file. 
 
-Then, we created and maintained an Oracle RDBMS for UT student registration. 
+Then, we created a DDL script in Oracle SQL to manage UT student registration. 
 
- **Key Takeaways**
+## Key Takeaways ##
 
-- Database Design
-    - Check out mine: *schema.png* file in this repo
-- Normalization
+**Database Design**
+    - Check out mine: it's in the *schema.png* file in this repo
+**Normalization**
     - What it is
     - When to normalize
     - Why we normalize
     - Denormalizing
-- Advanced query syntax
-    - ex. JOIN + HAVING + GROUP BY + SUBQUERY
-   See DDL + DML + DCL scripts for examples
-- Optimizing query performance
-    - indexing + sequence
-- Translating practical + complex situations into syntax
-    - ROLLUP + CUBE purpose, difference, shortcomings
-    - Why Tableau-style tools are better for multidimensional analysis
+**Advanced SQL exposure**
+   See DML + DCL + PL/SQL .txt files for details
+**Optimizing query performance**
+    - using index + sequences effectively
+**Translating complex situations into syntax**
+    - using JOIN + HAVING + GROUP BY + UNION
+    - sub-queries
+    - ROLLUP + CUBE, differences, shortcomings
+    - Why Tableau-style tools are better sometimes
 - Data ETL
     - Developed PL/SQL workflow to streamline data migration of UT’s new feeder school, Steven F. Austin
+    - See ETL.txt
 </aside>
 
-This repo includes the situational context that was defined by stakeholders,
-as well as a separate DDL script to reference for architecture. 
+
