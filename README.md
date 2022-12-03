@@ -1,14 +1,14 @@
 # University Registration DBA - UT Austin IT Desk
 
 *Course: MIS 325 - Database Management*
-
 *This was a long-form class project completed over the course of 9 weeks.*
 
-First, we conducted an extensive amount of discovery 
-research with school administrators to understand what the database requirements would be. 
-Those can be found in the context file. 
+**View in [Notion](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7)**
 
-Then, we created a DDL script in Oracle SQL to manage UT student registration. 
+
+
+We conducted an extensive amount of discovery research to understand what the database requirements would be. 
+Then, we created an ERD design + DDL script in Oracle SQL to manage UT student registration. 
 
 ## Key Takeaways ##
 
@@ -31,24 +31,6 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
 
     - Denormalizing
 [My notes on normalization](https://animesh-s.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
-
-**Advanced SQL exposure**
-
-   see ETL + DML + DCL + PL/SQL
-
-**Optimizing query performance**
-
-    - using index + sequences effectively
-
-**Translating complex situations into syntax**
-    - using JOIN + HAVING + GROUP BY + UNION
-    - sub-queries
-    - ROLLUP + CUBE, differences, shortcomings
-    - Why Tableau-style tools are better sometimes
-
-Data ETL
-    - Developed PL/SQL workflow to streamline data migration of UT’s new feeder school, Steven F. Austin
-    - See ETL.txt
 
 </aside>
 
