@@ -13,6 +13,7 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
 ## Key Takeaways ##
 
 **Database Design**
+
     - Check out mine: it's in the *schema.png* file in this repo
 
 **Normalization**
@@ -24,13 +25,14 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
     - Why we normalize
 
     - Denormalizing
-
-here are my notes on normalization - https://tinyurl.com/yvkktdwz
+[My notes on normalization](https://animesh-s.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
 
 **Advanced SQL exposure**
-   See DML + DCL + PL/SQL .txt files for details
+
+   - see DML + DCL + PL/SQL .txt files for details
 
 **Optimizing query performance**
+
     - using index + sequences effectively
 
 **Translating complex situations into syntax**
