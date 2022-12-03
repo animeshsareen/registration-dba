@@ -14,23 +14,35 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
 
 **Database Design**
     - Check out mine: it's in the *schema.png* file in this repo
+
 **Normalization**
+    
     - What it is
+
     - When to normalize
+
     - Why we normalize
+
     - Denormalizing
+
+here are my notes on normalization - https://tinyurl.com/yvkktdwz
+
 **Advanced SQL exposure**
    See DML + DCL + PL/SQL .txt files for details
+
 **Optimizing query performance**
     - using index + sequences effectively
+
 **Translating complex situations into syntax**
     - using JOIN + HAVING + GROUP BY + UNION
     - sub-queries
     - ROLLUP + CUBE, differences, shortcomings
     - Why Tableau-style tools are better sometimes
-- Data ETL
+
+Data ETL
     - Developed PL/SQL workflow to streamline data migration of UT’s new feeder school, Steven F. Austin
     - See ETL.txt
+
 </aside>
 
 
