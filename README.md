@@ -14,7 +14,12 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
 
 **Database Design**
 
-    - Check out mine: it's in the *schema.png* file in this repo
+    - Basic RDBMS concepts + fundamentals
+    - Primary key vs foreign key vs compound keys
+    - 1-1 vs 1-M vs M-M relationships
+    - Schema design techniques (simple, logical, phyical ERDs)
+
+[Check out my schema design](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a141acf5-ebaa-4f89-aee9-8f985bf625a7/schema.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221203%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221203T082225Z&X-Amz-Expires=86400&X-Amz-Signature=95abb7926f57148dc9995de9bc240dbeb35e26479958bcb2c0f3e262849d1cd0&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22schema.png%22&x-id=GetObject)
 
 **Normalization**
     
@@ -29,7 +34,7 @@ Then, we created a DDL script in Oracle SQL to manage UT student registration.
 
 **Advanced SQL exposure**
 
-   - see DML + DCL + PL/SQL .txt files for details
+   see ETL + DML + DCL + PL/SQL
 
 **Optimizing query performance**
 
