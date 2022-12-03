@@ -1,10 +1,10 @@
 # University Registration DBA - UT Austin IT Desk
 
 *Course: MIS 325 - Database Management*
+
 *This was a long-form class project completed over the course of 9 weeks.*
 
-**View in [Notion](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7)**
-
+## Click [here](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7) to view it in Notion
 
 
 We conducted an extensive amount of discovery research to understand what the database requirements would be. 
