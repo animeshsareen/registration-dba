@@ -7,8 +7,12 @@
 ## Click [here](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7) to view it in Notion
 
 
-We conducted an extensive amount of discovery research to understand what the database requirements would be. 
-Then, we created an ERD design + DDL script in Oracle SQL to manage UT student registration. 
+
+**We conducted extensive discovery research to understand the database**
+**requirements of UT's registration system.**
+
+**Then, we used our findings to create a logical ERD + DDL script**
+**to define UT student registration warehouse in Oracle SQL.**
 
 ## Key Takeaways ##
 
@@ -30,7 +34,10 @@ Then, we created an ERD design + DDL script in Oracle SQL to manage UT student r
     - Why we normalize
 
     - Denormalizing
-[My notes on normalization](https://animesh-s.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
+My notes on: 
+- [normalization](https://animesh-s.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
+- [indexes + sequences](https://www.notion.so/animesh-s/index-sequences-3b8add3b07254fbb9bd86a8be648f7cb)
+
 
 </aside>
 
