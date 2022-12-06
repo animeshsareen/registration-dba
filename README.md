@@ -4,9 +4,9 @@
 
 *This was a long-form class project completed over the course of 9 weeks.*
 
-## Click [here](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7) to view it in Notion
-
-
+### Click **[here](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7)** to view this (and further) research in Notion
+____
+#### Background
 
 **We conducted extensive discovery research to understand the database**
 **requirements of UT's registration system.**
