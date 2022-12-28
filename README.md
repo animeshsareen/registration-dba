@@ -1,18 +1,29 @@
-# University Registration DBA - UT Austin IT Desk
+# University Registration Database Administration
+    MIS 325: Database Management
+    Client: UT Austin Information & Technology Desk
+    
+_**This was a long-form project completed over four weeks.**_
 
-*Course: MIS 325 - Database Management*
 
-*This was a long-form class project completed over the course of 9 weeks.*
+### [Click here](sareen.notion.site) to view in Notion.
 
-### Click **[here](https://www.notion.so/animesh-s/Home-Page-6e039e82df07463ba571706af395c9e7)** to view this (and further) research in Notion
-____
-#### Background
+---
 
-**We conducted extensive discovery research to understand the database**
-**requirements of UT's registration system.**
+### Background
+UT Austin's IT Department needs help restructuring their _**Student and Course Registration System**_, and they've issued an open challenge to all students: design and build out a DDL script for the skeleton of an enterprise-level RDBMS capable of handling UT Austin's undergraduate and graduate student body as well as their course registration each semester.
 
-**Then, we used our findings to create a logical ERD + DDL script**
-**to define UT student registration warehouse in Oracle SQL.**
+### Deliverables 
+1. Normalized ERD for UT Registration
+2. DDL Script To Define RDMBS
+3. Testable Database (using mock data)
+
+### Approach
+First, we conducted an in-depth discovery of the registration process by speaking with system administrators and other users. We also evaluated the practical nuances of registration and potential relational caveats. For instance, storing each student's addresses poses a challenge for our database's cardinality; since most kids have both a home and local address (and some students will also share their local address). To overcome this, I created a bridge or "linking" table to map the many-to-many relationship between students and addresses in order to satisfy our RDMS integrity.
+
+Here's a link to my a LucidSpark chart of my final [logical ERD schema](https://lucid.app/lucidspark/d6d7d83b-4f92-4f24-8284-be3c9bae5e41/edit?viewport_loc=-794%2C-226%2C3840%2C1938%2C0_0&invitationId=inv_48421743-ac1e-4a0b-ab75-c4ff60eb7bfb).
+
+
+---
 
 ## Key Takeaways ##
 
@@ -23,20 +34,16 @@ ____
     - 1-1 vs 1-M vs M-M relationships
     - Schema design techniques (simple, logical, phyical ERDs)
 
-[Check out my schema design](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a141acf5-ebaa-4f89-aee9-8f985bf625a7/schema.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221203%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221203T082225Z&X-Amz-Expires=86400&X-Amz-Signature=95abb7926f57148dc9995de9bc240dbeb35e26479958bcb2c0f3e262849d1cd0&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22schema.png%22&x-id=GetObject)
-
 **Normalization**
     
     - What it is
-
     - When to normalize
-
     - Why we normalize
-
     - Denormalizing
+
 My notes on: 
-- [normalization](https://animesh-s.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
-- [indexes + sequences](https://www.notion.so/animesh-s/index-sequences-3b8add3b07254fbb9bd86a8be648f7cb)
+- [normalization](https://sareen.notion.site/Normalization-8834c653bf4740d498e65634c3977a59)
+- [indexes + sequences](https://sareen.notion.site/indexes-sequencing-b4d78b58a821488f81bc81566f83728d)
 
 
 </aside>
